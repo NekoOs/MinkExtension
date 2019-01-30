@@ -127,7 +127,7 @@ class MinkExtension implements ExtensionInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('mink_loader')->defaultNull()->end()
-                ->scalarNode('base_url')->defaultNull()->end()
+                ->scalarNode('base_url')->defaultValue(env('BASE_URL'))->end()
                 ->scalarNode('files_path')->defaultNull()->end()
                 ->booleanNode('show_auto')->defaultFalse()->end()
                 ->scalarNode('show_cmd')->defaultNull()->end()
@@ -179,6 +179,7 @@ class MinkExtension implements ExtensionInterface
      */
     public function initialize(ExtensionManager $extensionManager)
     {
+        \Dotenv\Dotenv::create(rtrim(getcwd(), DIRECTORY_SEPARATOR), '.env.mink')->load();
     }
 
     /**
